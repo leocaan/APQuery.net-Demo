@@ -1,0 +1,34 @@
+﻿@model Department
+@{
+
+	Layout = "~/Views/Shared/_LayoutOrm.cshtml";
+}
+
+<h2>Department Details.</h2>
+
+@using (Html.BeginForm())
+{
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-horizontal">
+				<div class="form-group">
+					Department Name:
+					<div class="col-md-8">
+						<span class="form-control">@Model.DeptName</span>
+					</div>
+				</div>
+				<div class="form-group">
+					Phone:
+					<div class="col-md-8">
+						<span class="form-control">@Model.Phone</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-4 col-md-8">
+						<a class="btn btn-default" href="@Url.Action("Edit", new { id=Model.DepartmentId })">Edit</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}

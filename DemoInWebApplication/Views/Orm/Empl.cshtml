@@ -1,0 +1,37 @@
+﻿@model List<Employee>
+@{
+	
+	Layout = "~/Views/Shared/_LayoutOrm.cshtml";
+}
+
+<h2>Employee List</h2>
+
+@using (Html.BeginForm()) { 
+
+
+<div class="row">
+	<div class="col-md-12" id="holder">
+		
+		<table class="table">
+			<tr>
+				<th>Employee ID</th>
+				<th>Name</th>
+				<th>Birthday</th>
+				<th>Email</th>
+			</tr>
+			@if (Model != null) { 
+				foreach (Employee item in Model)
+				{
+					<tr>
+						<td>@item.EmployeeId</td>
+						<td>@item.Name</td>
+						<td>@item.Birthday.ToShortDateString()</td>
+						<td>@item.Email</td>
+					</tr>
+				}
+			}
+		</table>
+	</div>
+</div>
+
+}

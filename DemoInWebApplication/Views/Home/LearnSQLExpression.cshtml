@@ -1,0 +1,131 @@
+﻿@{
+}
+
+<h2>Learning the usage of SQL Expression</h2>
+
+<hr />
+
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<p>You can get SQL Expression demo <a href="~/sql/index" target="_blank"><strong style="font-size:150%">here</strong></a>.</p>
+	</div>
+</div>
+	
+<h4>Asterisk query</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.Asterisk)
+   .from(t)
+   .where(t.ParentId&nbsp;==&nbsp;0)
+   .order_by(t.ParentId.Desc);
+</code></pre>
+
+
+<h4>Column Alias</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.DepartmentId,&nbsp;t.DeptName.As(<span style="color:#a31515;">&quot;name&quot;</span>),&nbsp;t.Phone.As(<span style="color:#a31515;">&quot;department&nbsp;phone&quot;</span>))
+   .from(t)
+   .where(t.ParentId&nbsp;==&nbsp;0)
+   .order_by(t.ParentId.Desc);
+</code></pre>
+
+<h4>Multi-table query</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:blue;">var</span>&nbsp;d&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.EmployeeId,&nbsp;d.DeptName,&nbsp;t.Name,&nbsp;t.Birthday,&nbsp;t.Email)
+   .from(t,&nbsp;d.JoinInner(t.DepartmentId&nbsp;==&nbsp;d.DepartmentId))
+   .order_by(t.Name.Asc);
+</code></pre>
+
+<h4>Self Relationship query</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;p&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department.As(<span style="color:#a31515;">&quot;parent&quot;</span>);
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.DepartmentId,&nbsp;t.DeptName,&nbsp;p.DeptName.As(<span style="color:#a31515;">&quot;ParentName&quot;</span>))
+   .from(t,&nbsp;p.JoinLeft(t.ParentId&nbsp;==&nbsp;p.DepartmentId))
+   .take(10);
+</code></pre>
+
+<h4>Subquery</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;e&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.DepartmentId,&nbsp;t.DeptName)
+   .from(t)
+   .where(t.DepartmentId.In(<span style="color:#2b91af;">APQuery</span>
+      .select(e.DepartmentId).distinct()
+      .from(e)
+   ));
+</code></pre>
+
+<h4>Paging Query</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.DepartmentId,&nbsp;t.DeptName)
+   .from(t)
+   .where(t.ParentId&nbsp;!=&nbsp;0)
+   .primary(t.DepartmentId) <span style="color:green;">// it's very important</span>
+   .take(10).skip(10);
+</code></pre>
+
+<h4>Aggregation and Group By</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Department;
+<span style="color:blue;">var</span>&nbsp;e&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(t.DepartmentId,&nbsp;t.DeptName,&nbsp;e.EmployeeId.Count().As(<span style="color:#a31515;">&quot;count&quot;</span>))
+   .from(t,&nbsp;e.JoinLeft(t.DepartmentId&nbsp;==&nbsp;e.DepartmentId))
+   .group_by(t.DepartmentId,&nbsp;t.DeptName,&nbsp;e.EmployeeId)
+   .having(e.EmployeeId.Count()&nbsp;&gt;&nbsp;0);
+</code></pre>
+
+
+<h4>Aggregation with Date</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:blue;">var</span>&nbsp;query&nbsp;=&nbsp;<span style="color:#2b91af;">APQuery</span>
+   .select(
+      t.Birthday.DateGroup(<span style="color:#2b91af;">APSqlDateGroupMode</span>.Month).As(<span style="color:#a31515;">&quot;Birthday&quot;</span>),
+      <span style="color:blue;">new</span>&nbsp;<span style="color:#2b91af;">APSqlAggregationExpr</span>(t.Birthday.DateGroup(<span style="color:#2b91af;">APSqlDateGroupMode</span>.Month),&nbsp;<span style="color:#2b91af;">APSqlAggregationType</span>.COUNT))
+   .from(t)
+   .group_by(t.Birthday.DateGroup(<span style="color:#2b91af;">APSqlDateGroupMode</span>.Month));
+</code></pre>
+
+<h4>Insert</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:#2b91af;">APQuery</span>.insert(t)
+   .values(
+      t.Name.SetValue(<span style="color:#a31515;">&quot;new&nbsp;name&quot;</span>),
+      t.DepartmentId.SetValue(1)
+      )
+   .set(t.Email,&nbsp;<span style="color:#a31515;">&quot;new&nbsp;mail&quot;</span>);
+</code></pre>
+
+<h4>Update</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:#2b91af;">APQuery</span>.update(t)
+   .values(
+      t.Name.SetValue(<span style="color:#a31515;">&quot;new&nbsp;name&quot;</span>),
+      t.DepartmentId.SetValue(1)
+      )
+   .set(t.Email,&nbsp;<span style="color:#a31515;">&quot;new&nbsp;mail&quot;</span>)
+   .where(t.EmployeeId&nbsp;==&nbsp;5);
+</code></pre>
+
+<h4>Delete</h4>
+<pre><code><span style="color:green;">//&nbsp;short&nbsp;name</span>
+<span style="color:blue;">var</span>&nbsp;t&nbsp;=&nbsp;<span style="color:#2b91af;">APDBDef</span>.Employee;
+<span style="color:#2b91af;">APQuery</span>.delete(t)
+   .where(t.DepartmentId&nbsp;==&nbsp;5&nbsp;&amp;&nbsp;t.Birthday&nbsp;&gt;&nbsp;<span style="color:#2b91af;">DateTime</span>.Now);
+</code></pre>

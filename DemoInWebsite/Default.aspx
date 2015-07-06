@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="jumbotron">
 		<h1>Website Demo</h1>
-		<p class="lead">Learn how to use <strong>APQuery.net</strong> in a Website project.</p>
+		<p class="lead">Learn how to use <a href="https://github.com/leocaan/APQuery.net" target="_blank">APQuery.net</a> in a Website project.</p>
 	</div>
 	
 	<div class="row">

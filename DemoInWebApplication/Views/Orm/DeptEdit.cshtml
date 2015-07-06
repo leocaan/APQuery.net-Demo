@@ -1,0 +1,33 @@
+﻿@model Department
+@{
+	
+	Layout = "~/Views/Shared/_LayoutOrm.cshtml";
+}
+
+<h2>Edit the Department.</h2>
+	
+@using (Html.BeginForm()) { 
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-horizontal">
+			<div class="form-group">
+				@Html.LabelFor(m => m.DeptName, new { @Class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.DeptName, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(m => m.Phone, new { @Class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4 col-md-8">
+					<input type="submit" class="btn btn-default" value="Save" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+}

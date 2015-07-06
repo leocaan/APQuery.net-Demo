@@ -24,13 +24,22 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DemoInWebsite(2)", "http://
 		SlnRelativePath = "DemoInWebsite\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoInWebApplication", "DemoInWebApplication\DemoInWebApplication.csproj", "{748565E1-7323-43CD-897E-9DBE4C37B28B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7EFFD7BB-2C10-4A3F-984A-EE3B6D7DA990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EFFD7BB-2C10-4A3F-984A-EE3B6D7DA990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EFFD7BB-2C10-4A3F-984A-EE3B6D7DA990}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EFFD7BB-2C10-4A3F-984A-EE3B6D7DA990}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{748565E1-7323-43CD-897E-9DBE4C37B28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748565E1-7323-43CD-897E-9DBE4C37B28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748565E1-7323-43CD-897E-9DBE4C37B28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748565E1-7323-43CD-897E-9DBE4C37B28B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
